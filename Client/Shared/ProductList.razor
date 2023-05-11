@@ -1,4 +1,6 @@
-﻿<ul class="list-unstyled">
+﻿@inject HttpClient _httpClient
+
+<ul class="list-unstyled">
     @foreach (var item in Products)
     {
         <li class="media my-3">
@@ -9,7 +11,7 @@
             </div>
             <div class="media-body">
                 <a href="#">
-                    <h4>@item.Description</h4>
+                    <h4>@item.Title</h4>
                 </a>
                 <p>@item.Description</p>
                 <h5 class="price">
@@ -21,31 +23,15 @@
 </ul>
 
 @code {
-    private static List<Product> Products = new List<Product>
+    private static List<Product> Products = new List<Product>();
+
+    protected override async Task OnInitializedAsync()
     {
-        new Product
+        var result = await _httpClient.GetFromJsonAsync<List<Product>>("api/Product");
+        if(result != null)
         {
-            Id = 1,
-            Title = "Test Product No:1",
-            Description = "Lorem Ipsum",
-            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg",
-            Price = 9.99m
-        },
-        new Product
-        {
-            Id = 2,
-            Title = "Test Product No:2",
-            Description = "Lorem Ipsum Amet",
-            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/a/a4/Ready_Player_One_cover.jpg",
-            Price = 12.99m
-        },
-        new Product
-        {
-            Id = 3,
-            Title = "Test Product No:3",
-            Description = "Lorem Ipsum Amet Dolor",
-            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/b/bd/H2G2_UK_front_cover.jpg ",
-            Price = 21.99m
-        },
-    };
+            Products = result;
+        }
+    }
+
 }
