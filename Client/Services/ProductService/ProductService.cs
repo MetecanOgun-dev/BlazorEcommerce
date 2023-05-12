@@ -4,11 +4,23 @@
     {
         private readonly HttpClient _httpClient;
         public List<Product> Products { get; set; } = new List<Product>();
-
+        
 
         public ProductService(HttpClient httpClient)
         {
             _httpClient = httpClient;            
+        }
+
+        public async Task<ServiceResponse<Product>> GetProduct(int id)
+        {
+            var result = await _httpClient.GetFromJsonAsync<ServiceResponse<Product>>($"/api/product/{id}");
+            
+            if (result != null && result.Data != null)
+            {
+                var product = result.Data;
+                return result;
+            }
+            return result;
         }
 
         public async Task GetProducts()
@@ -20,6 +32,8 @@
                 Products = result.Data;
             }
         }
+
+
     }
 }
 //esra.pirlanta@btc-ag.com.tr
