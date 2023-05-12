@@ -12,8 +12,14 @@
         public async Task<ServiceResponse<Product>> GetProductAsync(int id)
         {
             var response = new ServiceResponse<Product>();
-            var product = await _dataContext.Products.FindAsync(id);
-            if(product == null)
+            //var product = await _dataContext.Products.FindAsync(id);
+            var product = await _dataContext.Products
+                .Include(p=> p.Variants)
+                .ThenInclude(v=> v.ProductType)
+                .FirstOrDefaultAsync(p=> p.Id == id);
+                //fill the "ProductVariant" of Product model with given id  == "Include",
+                //fill the "ProductType" of Product model's ProducVariant with given id  == "ThenInclude"
+            if (product == null)
             {
                 response.Sucess = false;
                 response.Message = "Product Does not exist";
@@ -28,7 +34,9 @@
         public async Task<ServiceResponse<List<Product>>> GetProductListAsync()
         {
             var response = new ServiceResponse<List<Product>>();
-            response.Data = await _dataContext.Products.ToListAsync();
+            response.Data = await _dataContext.Products
+                .Include(p => p.Variants)
+                .ToListAsync();
             return response;
         }
 
