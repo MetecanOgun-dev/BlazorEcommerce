@@ -36,4 +36,3 @@
 
     }
 }
-//esra.pirlanta@btc-ag.com.tr
