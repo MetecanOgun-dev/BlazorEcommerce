@@ -19,7 +19,7 @@ namespace BlazorEcommerce.Client.Services.ProductService
         {
             var result = categoryUrl != null ?
              await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>($"/api/product/category/{categoryUrl}"):
-             await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("/api/product/");
+             await _httpClient.GetFromJsonAsync<ServiceResponse<List<Product>>>("/api/product/featured");
 
             if (result != null && result.Data != null)
             {

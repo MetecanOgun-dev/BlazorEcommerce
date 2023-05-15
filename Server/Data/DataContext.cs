@@ -56,7 +56,8 @@
                      Title = "This Is How You Lose the Time War",
                      Description = "Among the ashes of a dying world, an agent of the Commandment finds a letter. It reads: Burn before reading.\r\n\r\nThus begins an unlikely correspondence between two rival agents hellbent on securing the best possible future for their warring factions. Now, what began as a taunt, a battlefield boast, becomes something more. Something epic. Something romantic. Something that could change the past and the future.\r\n\r\nExcept the discovery of their bond would mean the death of each of them. There’s still a war going on, after all. And someone has to win. That’s how war works, right?\r\n\r\nCowritten by two beloved and award-winning sci-fi writers, This Is How You Lose the Time War is an epic love story spanning time and space.",
                      ImageUrl = "https://m.media-amazon.com/images/I/413wMSCwmML._SX331_BO1,204,203,200_.jpg",
-                     CategoryId = 1
+                     CategoryId = 1,
+                     Featured = true,
 
                  },
                  new Product
@@ -81,7 +82,8 @@
                      Title = "The Matrix",
                      Description = "The Matrix is a 1999 science fiction action film written and directed by the Wachowskis, and produced by Joel Silver. Starring Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss, Hugo Weaving, and Joe Pantoliano, and as the first installment in the Matrix franchise, it depicts a dystopian future in which humanity is unknowingly trapped inside a simulated reality, the Matrix, which intelligent machines have created to distract humans while using their bodies as an energy source. When computer programmer Thomas Anderson, under the hacker alias \"Neo\", uncovers the truth, he \"is drawn into a rebellion against the machines\" along with other people who have been freed from the Matrix.",
                      ImageUrl = "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg",
-                     CategoryId = 21
+                     CategoryId = 21,
+                     Featured = true,
                  },
                  new Product
                  {
@@ -106,7 +108,8 @@
                      Title = "Half-Life 2",
                      Description = "Half-Life 2 is a 2004 first-person shooter game developed and published by Valve. Like the original Half-Life, it combines shooting, puzzles, and storytelling, and adds features such as vehicles and physics-based gameplay.",
                      ImageUrl = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
-                     CategoryId = 3
+                     CategoryId = 3,
+                     Featured = true,
                  },
                  new Product
                  {

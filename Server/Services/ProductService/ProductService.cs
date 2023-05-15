@@ -106,5 +106,15 @@ namespace BlazorEcommerce.Server.Services.ProductService
                 .Include(p => p.Variants)
                 .ToListAsync();
         }
+
+        public async Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
+        {
+            var response = new ServiceResponse<List<Product>>();
+            response.Data = await _dataContext.Products.Where(p => p.Featured)
+                .Include(p=> p.Variants)
+                .ToListAsync();
+
+            return response;
+        }
     }
 }
