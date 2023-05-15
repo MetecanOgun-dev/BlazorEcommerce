@@ -48,6 +48,7 @@ namespace BlazorEcommerce.Server.Services.ProductService
             var response = new ServiceResponse<List<Product>>();
             response.Data = await _dataContext.Products
                 .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
+                .Include(v=> v.Variants)
                 .ToListAsync();
             return response;
         }
@@ -115,6 +116,16 @@ namespace BlazorEcommerce.Server.Services.ProductService
             return response;
         }
 
+        public async Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
+        {
+            var response = new ServiceResponse<List<Product>>();
+            response.Data = await _dataContext.Products.Where(p => p.Featured)
+                .Include(p=> p.Variants)
+                .ToListAsync();
+
+            return response;
+        }
+
         private async Task<List<Product>> FindProductsBySearchText(string searchText)
         {
             return await _dataContext.Products
@@ -124,16 +135,6 @@ namespace BlazorEcommerce.Server.Services.ProductService
                         p.Description.ToLower().Contains(searchText.ToLower()))
                 .Include(p => p.Variants)
                 .ToListAsync();
-        }
-
-        public async Task<ServiceResponse<List<Product>>> GetFeaturedProducts()
-        {
-            var response = new ServiceResponse<List<Product>>();
-            response.Data = await _dataContext.Products.Where(p => p.Featured)
-                .Include(p=> p.Variants)
-                .ToListAsync();
-
-            return response;
         }
     }
 }
