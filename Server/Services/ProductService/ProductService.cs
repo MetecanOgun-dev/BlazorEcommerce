@@ -1,4 +1,6 @@
-﻿namespace BlazorEcommerce.Server.Services.ProductService
+﻿using BlazorEcommerce.Shared;
+
+namespace BlazorEcommerce.Server.Services.ProductService
 {
     public class ProductService : IProductService
     {
@@ -47,6 +49,62 @@
                 .Where(p => p.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
                 .ToListAsync();
             return response;
+        }
+
+        public async Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        {
+            var response = new ServiceResponse<List<Product>>();
+            var products = await FindProductsBySearchText(searchText);
+            response.Data = products;
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<string>>> GetProductSearchSuggestions(string searchText)
+        {
+            List<string> results = new List<string>();
+            ServiceResponse<List<string>> response = new ServiceResponse<List<string>>();
+            var products = await FindProductsBySearchText(searchText);
+            
+            foreach (var item in products)
+            {
+                if (item.Title.ToLower().Contains(searchText.ToLower()))
+                {
+                    results.Add(item.Title);
+                }
+                if(item.Description != null)
+                {
+                    var punctutation = item.Description.ToLower()
+                        .Where(char.IsPunctuation)
+                        .Distinct()
+                        .ToArray();
+                    var words = item.Description.ToLower()
+                        .Split()
+                        .Select(s => s.Trim(punctutation));
+
+                    foreach(var word in words)
+                    {
+                        if(word.Contains(searchText.ToLower()) && !results.Contains(word))
+                        {
+                            results.Add(word);
+                        }
+                    }
+                }
+            }
+            response.Data = results;
+
+            return response;
+        }
+
+        private async Task<List<Product>> FindProductsBySearchText(string searchText)
+        {
+            return await _dataContext.Products
+                .Where(p =>
+                        p.Title.ToLower().Contains(searchText.ToLower())
+                        ||
+                        p.Description.ToLower().Contains(searchText.ToLower()))
+                .Include(p => p.Variants)
+                .ToListAsync();
         }
     }
 }
